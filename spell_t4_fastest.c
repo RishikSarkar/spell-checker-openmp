@@ -56,7 +56,8 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	
-	#pragma omp parallel for private(j, hash)
+	#pragma omp parallel for private(i, j, hash) schedule(guided) shared(hf, bv_size, bv)
+	// #pragma omp parallel for private(j, hash) schedule(static) shared(wl_size, num_hf, wl, bv_size, bv)
 	for (i = 0; i < wl_size; i++) {
 		// #pragma omp parallel for
 		for (j = 0; j < num_hf; j++) {
@@ -69,7 +70,7 @@ int main(int argc, char *argv[])
 	/* do the spell checking */
 	misspelled = 0;
 
-	// #pragma omp parallel for private(j, hash) shared(bv, bv_size, num_hf)
+	// #pragma omp parallel for private(j, hash)
 	for (j = 0; j < num_hf; j++) {
 		hash = hf[j] (word);
 		hash %= bv_size;

@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 	/* do the spell checking */
 	misspelled = 0;
 
-	// #pragma omp parallel for private(j, hash) shared(bv, bv_size, num_hf)
+	// #pragma omp parallel for private(j, hash)
 	for (j = 0; j < num_hf; j++) {
 		hash = hf[j] (word);
 		hash %= bv_size;
